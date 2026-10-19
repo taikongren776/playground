@@ -32,11 +32,11 @@ renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
 renderer.setSize(innerWidth,Math.max(innerHeight,560));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;
 $('scene').appendChild(renderer.domElement);$('loading-progress').style.width='25%';
-const scene=new THREE.Scene();scene.background=new THREE.Color('#e7ece1');scene.fog=new THREE.Fog('#e7ece1',105,195);
-const camera=new THREE.PerspectiveCamera(36,innerWidth/Math.max(innerHeight,560),.1,260);
+const scene=new THREE.Scene();scene.background=new THREE.Color('#e7ece1');scene.fog=new THREE.Fog('#e7ece1',210,320);
+const camera=new THREE.PerspectiveCamera(36,innerWidth/Math.max(innerHeight,560),.1,360);
 const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.065;controls.enablePan=false;controls.minDistance=26;controls.maxDistance=108;controls.minPolarAngle=.25;controls.maxPolarAngle=Math.PI*.46;controls.rotateSpeed=.65;controls.zoomSpeed=.7;
 const isMobile=()=>innerWidth<650;
-function home(){controls.target.set(0,1,2);camera.position.set(isMobile()?66:61,isMobile()?65:55,isMobile()?86:77);if(isMobile()){camera.position.multiplyScalar(1.05);}controls.update();}
+function home(){controls.maxDistance=isMobile()?190:108;controls.target.set(0,1,2);camera.position.set(isMobile()?88:61,isMobile()?88:55,isMobile()?121:77);controls.update();}
 home();
 const ambient=new THREE.HemisphereLight('#fffcdf','#69847a',2.5);scene.add(ambient);
 const sun=new THREE.DirectionalLight('#fff0d7',3.6);sun.position.set(-35,60,30);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-47,right:47,top:47,bottom:-47,near:1,far:150});sun.shadow.normalBias=.05;sun.shadow.bias=-.0002;scene.add(sun);
@@ -153,7 +153,8 @@ function burst(x,y,z,color){const count=90,positions=new Float32Array(count*3),v
 $('fireworks').onclick=()=>{if(fireworkShow)return;if(!night){setNight(true);toast('夜幕降临，愿你的心愿在此刻绽放。');}fireworkShow={start:elapsed,next:0};$('fireworks').disabled=true;};
 function updateFireworks(dt){if(fireworkShow){const t=elapsed-fireworkShow.start;if(t>=fireworkShow.next*.8&&fireworkShow.next<7){burst(-12+rand()*24,17+rand()*9,-12+rand()*8,['#ffdda0','#efbbd9','#b1dce7','#cfe7a3'][fireworkShow.next%4]);fireworkShow.next++;}if(t>8){fireworkShow=null;$('fireworks').disabled=false;}}for(let j=bursts.length-1;j>=0;j--){const b=bursts[j];b.age+=dt;const a=b.points.geometry.attributes.position;for(let i=0;i<b.velocities.length;i++){const v=b.velocities[i];v.y-=dt*1.7;a.array[i*3]+=v.x*dt;a.array[i*3+1]+=v.y*dt;a.array[i*3+2]+=v.z*dt;}a.needsUpdate=true;b.points.material.opacity=Math.max(0,1-b.age/3);if(b.age>3){scene.remove(b.points);b.points.geometry.dispose();b.points.material.dispose();bursts.splice(j,1);}}}
 function updateRides(){const t=elapsed;coaster.cars.forEach((car,i)=>{const phase=((t/36-i*.024)%1+1)%1;const p=curve.getPointAt(phase),tangent=curve.getTangentAt(phase);car.position.copy(p);car.lookAt(p.clone().add(tangent));});wheel.rotor.rotation.z=t*.12;wheel.cabins.forEach(c=>c.rotation.z=-wheel.rotor.rotation.z);carousel.rotor.rotation.y=t*.3;carousel.horses.forEach((h,i)=>h.position.y=1.3+Math.sin(t*1.7+i)*.22);swings.rotor.rotation.y=-t*.45;}
-function resize(){const w=$('app').clientWidth,h=$('app').clientHeight;camera.aspect=w/h;camera.fov=riding?65:(isMobile()?50:36);camera.updateProjectionMatrix();renderer.setSize(w,h);}
+let mobileLayout=isMobile();
+function resize(){const w=$('app').clientWidth,h=$('app').clientHeight;camera.aspect=w/h;camera.fov=riding?65:(isMobile()?50:36);camera.updateProjectionMatrix();renderer.setSize(w,h);if(mobileLayout!==isMobile()&&!riding){home();mobileLayout=isMobile();}}
 window.addEventListener('resize',resize);resize();
 let frameCount=0;
 function animate(){requestAnimationFrame(animate);const dt=Math.min(clockTime.getDelta(),.05);if(document.hidden)return;elapsed+=dt;updateRides();guests.forEach(p=>{const a=p.a+elapsed*p.speed;p.g.position.set(Math.cos(a)*p.r,.6,Math.sin(a)*p.r);p.g.rotation.y=-a;p.g.rotation.z=Math.sin(elapsed*5+p.a)*.04;});clouds.forEach((c,i)=>c.position.x+=Math.sin(elapsed*.08+i)*dt*.13);waterRipples.forEach((r,i)=>r.material.roughness=.4+Math.sin(elapsed+i)*.1);updateFireworks(dt);scene.updateMatrixWorld(true);
