@@ -2,6 +2,16 @@
 
 使用 Three.js、Vite 和原生 JavaScript 制作的中文 3D 童话乐园。所有场景模型均为程序化生成，无需外部模型服务或后端。
 
+![星愿奇境全景](docs/preview.png)
+
+## 版本与发布
+
+首个版本：`v1.0.0`。Release 标题、正文和手动发布步骤见 [发布说明](RELEASE_NOTES.md)。
+
+[在线体验](https://starlight-wonderpark.dvkifu.chatgpt.site)（当前 Sites 站点仅所有者可访问）。
+
+仓库保留原有 Sites 静态托管配置；使用其他静态托管平台时无需该配置。不要将 `node_modules/` 或本地运行缓存提交到仓库。
+
 ## 本地运行
 
 需要 Node.js 20.19+ 或 22.12+。
