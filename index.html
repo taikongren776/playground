@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="theme-color" content="#f6f4ec"/><meta name="description" content="一座藏在云端的童话乐园。探索星愿奇境，乘上四种经典游乐设施，在日落后点亮你的烟花。"/><title>星愿奇境 · Starlight Park</title></head>
+<body>
+ <main id="app">
+  <div id="scene" aria-label="可拖动旋转与缩放的 3D 童话游乐场"></div>
+  <div class="vignette"></div>
+  <header class="topbar">
+   <a class="brand" href="./" aria-label="星愿奇境首页"><span class="brand-symbol"><i data-lucide="castle"></i></span><span><strong>星愿奇境<span class="brand-dot">✦</span></strong><small>STARLIGHT PARK</small></span></a>
+   <div class="park-status"><span class="status-dot"></span>奇妙正在发生<span class="status-divider"></span><span id="time-label">晴日 · 14:00</span></div>
+   <nav class="tools" aria-label="场景工具"><button id="day-toggle" class="day-toggle" aria-label="切换至夜晚" aria-pressed="false"><i data-lucide="sun"></i><span>白昼</span><span class="toggle-track"><b></b></span><i data-lucide="moon"></i></button><button id="help-toggle" class="icon-button" aria-label="操作指南"><i data-lucide="circle-help"></i></button></nav>
+  </header>
+  <section class="intro"><div class="eyebrow"><span></span> YOUR LITTLE ESCAPE</div><h1>把快乐，<br/>交给这一刻<span>。</span></h1><p>欢迎来到星愿奇境。<br/>选一份心动，开启你的奇妙旅程。</p><div class="intro-note"><span class="tiny-star">✧</span> 四种奇遇 · 无限快乐</div></section>
+  <div id="labels" aria-hidden="true"></div>
+  <aside class="scene-controls" aria-label="视角控制"><button id="zoom-in" class="icon-button" aria-label="放大"><i data-lucide="plus"></i></button><button id="zoom-out" class="icon-button" aria-label="缩小"><i data-lucide="minus"></i></button><span></span><button id="reset-view" class="icon-button" aria-label="回到全景"><i data-lucide="scan"></i></button></aside>
+  <button id="fireworks" class="fireworks-button"><i data-lucide="sparkles"></i><span>放一场烟花</span><span class="night-tag">夜间限定</span></button>
+  <section id="detail" class="detail-panel" hidden aria-label="设施详情"><button id="close-detail" class="close-button" aria-label="关闭详情"><i data-lucide="x"></i></button><span id="detail-number" class="eyebrow"></span><h2 id="detail-name"></h2><p id="detail-description"></p><div class="detail-meta"><span id="detail-kind"></span><span id="detail-duration"></span></div><button id="start-ride" class="primary-button">开始乘坐 <i data-lucide="arrow-up-right"></i></button></section>
+  <section id="ride-hud" class="ride-hud" hidden><div><span class="status-dot"></span><span id="riding-name"></span><span id="ride-countdown"></span></div><button id="exit-ride"><i data-lucide="log-out"></i>退出乘坐 <kbd>ESC</kbd></button></section>
+  <footer class="explore-dock"><div class="dock-heading"><span><i data-lucide="compass"></i> 下一站，心动</span><small>点击设施，开启体验 <i data-lucide="arrow-down-right"></i></small></div><div id="ride-cards" class="ride-cards"></div><div class="dock-bottom"><span><i data-lucide="mouse-pointer-2"></i> 拖动探索 <b>·</b> 滚轮缩放 <b>·</b> 点击乘坐</span><span>MADE OF LITTLE WONDERS <span class="tiny-star">✦</span></span></div></footer>
+  <div id="help" class="help-panel" hidden><button id="close-help" class="close-button" aria-label="关闭操作指南"><i data-lucide="x"></i></button><span class="eyebrow">LET THE MAGIC BEGIN</span><h2>你的乐园，随心探索</h2><p><b>环顾乐园</b>　鼠标或单指拖动</p><p><b>拉近风景</b>　滚轮或双指缩放</p><p><b>开启旅程</b>　点击设施或下方卡片</p><p><b>返回全景</b>　退出乘坐或按 Esc</p><p class="help-tip">切换到夜晚，送自己一场烟花。</p></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <div id="loading" class="loading"><span class="loading-star">✦</span><h2>奇境即将开启</h2><p id="loading-text">正在唤醒你的童话乐园…</p><div class="loading-bar"><span id="loading-progress"></span></div></div>
+ </main><script type="module" src="/src/main.js"></script>
+</body></html>
